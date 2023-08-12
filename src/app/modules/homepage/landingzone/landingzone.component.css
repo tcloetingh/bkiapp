@@ -1,0 +1,27 @@
+.container {
+    height: 400px;
+    position: relative;
+  }
+  
+.center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+
+p {
+    text-align: center;
+}
+
+.btn-container {
+    width: 250px;
+}
+
+button {
+    margin-top: 10px;
+    width: 250px;
+}
+
