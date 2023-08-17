@@ -16,3 +16,17 @@ p {
     padding-left: 0px;
     padding-right: 0px;
 }
+
+#verticalScroll {
+  overflow-y:scroll;
+  height:700px;
+}
+
+.container {
+    padding-bottom: 50px;
+}
+
+#openInsertNewBtn {
+    margin-top: 15px;
+    display: inline;
+}
