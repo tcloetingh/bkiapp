@@ -1,32 +1,60 @@
 .form-group {
-    width: 300px;
+  width: 100%;
 }
 
 .head-section {
-    margin-top: 20px;
-    text-align: center;
+  margin-top: 20px;
+  text-align: center;
 }
 
 p {
-    text-align: center;
-    margin-bottom: 40px;
+  text-align: center;
+  margin-bottom: 40px;
 }
 
 .search-nav {
-    padding-left: 0px;
-    padding-right: 0px;
+  text-align: center;
 }
 
 #verticalScroll {
-  overflow-y:scroll;
-  height:700px;
+  overflow-y: scroll;
+  height: 600px;
+  padding: 0px;
 }
 
 .container {
-    padding-bottom: 50px;
+  padding-bottom: 50px;
 }
 
+/* table {
+  width: 100%;
+  border: 1px solid red;
+} */
+
 #openInsertNewBtn {
-    margin-top: 15px;
-    display: inline;
+  display: inline;
+}
+
+/* .table-outline {
+  border-radius: 5px;
+  border: 1px solid grey;
+} */
+
+.table-nav-top {
+  border-bottom: 1px solid grey;
+  background-color: #f1f1f1 !important;
+}
+
+.table-nav-bottom {
+  border-top: 1px solid grey;
+  background-color: #f1f1f1 !important;
+}
+
+#newCocktailModal {
+  /* display: block !important; */
+}
+
+.modal-body {
+  height: 70vh;
+  overflow-y: auto;
 }

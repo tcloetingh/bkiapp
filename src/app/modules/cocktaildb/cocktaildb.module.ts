@@ -4,7 +4,7 @@ import { CocktailsMainComponent } from './cocktails-main/cocktails-main.componen
 import { NewCocktailModalComponent } from './new-cocktail-modal/new-cocktail-modal.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -15,7 +15,8 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxPaginationModule
   ],
   exports: [NewCocktailModalComponent]
 })

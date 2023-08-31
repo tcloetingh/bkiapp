@@ -1,0 +1,9 @@
+.cocktail-pagination .current {
+  background: #78c2ad !important;
+}
+.ngx-pagination {
+  margin-top: auto !important;
+  margin-bottom: auto !important;
+  padding-left: 0;
+  padding-right: 0;
+}

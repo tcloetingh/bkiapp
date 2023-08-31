@@ -11,7 +11,7 @@ import { CustomHttpRespone } from '../models/CustomHttpResponse';
 export class CocktailSerivceService {
   readonly ROOT_URL = 'http://localhost:8080';
   count: Observable<number>;
-  // cocktails: Observable<Cocktail[]>;
+  
 
   constructor(private http: HttpClient) { }
 
@@ -20,9 +20,16 @@ export class CocktailSerivceService {
     return this.count; 
   }
 
-  public getCocktails(page: number): Observable<Cocktail[]> {
-    let myParams = new HttpParams().set('page', page);
-    return this.http.get<Cocktail[]>(this.ROOT_URL + "/cocktails", {params: myParams});
+  public getCocktails(): Observable<Cocktail[]> {
+    //let myParams = new HttpParams().set('page');
+    return this.http.get<Cocktail[]>(this.ROOT_URL + "/cocktails");
+  }
+
+  public searchCocktails(searchForm: FormGroup): Observable<Cocktail[]> {
+    let formData: FormData = new FormData();
+    let myParams = new HttpParams().set('searchTerm', searchForm.value.searchTerm)
+    formData.append('searchTerm', searchForm.value.searchTerm);
+    return this.http.get<Cocktail[]>(this.ROOT_URL + "/cocktails/search", {params: myParams});
   }
 
   public postNewCocktial(cocktailForm: FormGroup): Observable<CustomHttpRespone> {

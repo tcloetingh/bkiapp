@@ -1,110 +1,235 @@
-
 <div class="container">
-    <div class="row head-section">
-        <div class="col">
-            <h1>The Worlds Premier Online Cocktail Database</h1>
-            <p>Over 1,000 unique cocktails cataloged and queriable by any parameter</p>
-        </div>
+  <div class="row head-section">
+    <div class="col">
+      <h1>The Bar Keepers Index</h1>
+      <h4>Cocktail Database</h4>
+      <p>
+        Over 1,000 unique cocktails cataloged and queriable by any parameter
+      </p>
+    </div>
+  </div>
+  <div class="table-outline">
+    <div class="row">
+      <div class="search-nav col">
+        <nav
+          class="table-nav-top navbar navbar-light bg-light justify-content-between"
+        >
+          <a class="navbar-brand">Search by Ingredients or Name</a>
+          <span>Total Cocktails: {{ totalCount }}</span>
+          <form
+            class="form-inline"
+            [formGroup]="searchForm"
+            (ngSubmit)="onSearchSubmit()"
+          >
+            <input
+              class="form-control mr-sm-5"
+              formControlName="searchTerm"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+            />
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+              Search
+            </button>
+          </form>
+        </nav>
+      </div>
+    </div>
+    <div id="verticalScroll" class="row">
+      <div class="col">
+        <table class="table table-striped table-dark">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Ingredients</th>
+              <th scope="col">Preparation</th>
+              <th scope="col">Glassware</th>
+              <th scope="col">Inventor</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="
+                let item of cocktails
+                  | paginate
+                    : {
+                        itemsPerPage: 20,
+                        currentPage: page,
+                        totalItems: searchCount
+                      }
+              "
+            >
+              <td>{{ item.name }}</td>
+              <td>{{ item.ingredients }}</td>
+              <td>{{ item.preparation }}</td>
+              <td>{{ item.glassware }}</td>
+              <td>{{ item.garnish }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
     <div class="row">
-        <div class="search-nav col">
-          <nav class="navbar navbar-light bg-light justify-content-between">
-            <a class="navbar-brand">Search by Ingredients or Name</a>
-            <span>Total Cocktails: {{totalCount}}</span>
-            <form class="form-inline">
-              <input class="form-control mr-sm-5" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
-          </nav>
-        </div>
-          <div id="verticalScroll">
-            <table class="table table-striped table-dark">
-                <thead >
-                  <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Ingredients</th>
-                    <th scope="col">Preparation</th>
-                    <th scope="col">Glassware</th>
-                    <th scope="col">Inventor</th>
-                  </tr>
-                </thead> 
-                <tbody *ngFor="let item of cocktails">
-                  <tr>
-                    <td>{{item.name}}</td>
-                    <td>{{item.ingredients}}</td>
-                    <td>{{item.preparation}}</td>
-                    <td>{{item.glassware}}</td>
-                    <td>{{item.garnish}}</td>
-                  </tr>
-                </tbody>
-              </table>
-          </div>
-          <nav aria-label="Page navigation example">
-            <ul class="pagination">
-              <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item"><a class="page-link" href="#">Next</a></li>
-            </ul>
-            <button id="openInsertNewBtn" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Insert new Cocktail
-            </button>
-          </nav>
+      <div class="col">
+        <nav
+          class="table-nav-bottom navbar navbar-light bg-light d-flex align-items-center"
+        >
+          <pagination-controls
+            class="cocktail-pagination"
+            (pageChange)="page = $event"
+          ></pagination-controls>
+          <button
+            id="openInsertNewBtn"
+            type="button"
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#newCocktailModal"
+          >
+            Insert new Cocktail
+          </button>
+        </nav>
+      </div>
     </div>
-    <!-- <div class="row">
+  </div>
+
+  <!-- <div class="row">
         <div class="col">
             <button id="openInsertNewBtn" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Insert new Cocktail
             </button>
         </div>
     </div> -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">New Cocktail Details</h5>
-            </div>
-            <form class="form" [formGroup]="cocktailForm" (ngSubmit)="onFormSubmit()">
-            <div class="modal-body"> 
-                <div class="form-group"> 
-                  <div>
-                    <label class="form-label mt-4" for="readOnlyInput">Cocktail Name</label>
-                    <input class="form-control" id="readOnlyInput" type="text" formControlName="name"
-                            [class.is-invalid]="cocktailForm.get('name')?.invalid && (cocktailForm.get('name')?.dirty || cocktailForm.get('name')?.touched)">
-                  </div>
-                  <div>
-                    <label class="form-label mt-4" for="readOnlyInput">Ingredients</label>
-                    <input class="form-control" id="readOnlyInput" type="text" formControlName="ingredients">
-                  </div>
-                  <div>
-                    <label class="form-label mt-4" for="readOnlyInput">Preparation</label>
-                    <input class="form-control" id="readOnlyInput" type="text" formControlName="preparation">
-                  </div>
-                  <div>
-                    <label class="form-label mt-4" for="readOnlyInput">Garnish</label>
-                    <input class="form-control" id="readOnlyInput" type="text" formControlName="garnish">
-                  </div>
-                  <div>
-                    <label class="form-label mt-4" for="readOnlyInput">Glassware</label>
-                    <input class="form-control" id="readOnlyInput" type="text" formControlName="glassware">
-                  </div>
-                  <div>
-                    <label class="form-label mt-4" for="readOnlyInput">Origin</label>
-                    <input class="form-control" id="readOnlyInput" type="text" formControlName="origin">
-                  </div>
-                  <div>
-                    <label class="form-label mt-4" for="readOnlyInput">Bartender</label>
-                    <textarea class="form-control" id="readOnlyInput" type="textarea" formControlName="bartender"></textarea>
-                  </div>
-                </div>   
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
-            </div>
-        </form> 
-          </div>
+  <div
+    class="modal fade"
+    id="newCocktailModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">
+            New Cocktail Details
+          </h5>
         </div>
+        <form
+          class="form"
+          [formGroup]="cocktailForm"
+          (ngSubmit)="onFormSubmit()"
+        >
+          <div class="modal-body">
+            <div class="form-group">
+              <div class="row col-12">
+                <label class="form-label mt-4" for="readOnlyInput"
+                  >Cocktail Name</label
+                >
+                <input
+                  class="form-control"
+                  id="readOnlyInput"
+                  type="text"
+                  formControlName="name"
+                  [class.is-invalid]="
+                    cocktailForm.get('name')?.invalid &&
+                    (cocktailForm.get('name')?.dirty ||
+                      cocktailForm.get('name')?.touched)
+                  "
+                />
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <label class="form-label mt-4" for="readOnlyInput"
+                    >Ingredients</label
+                  >
+                  <textarea
+                    class="form-control"
+                    id="readOnlyInput"
+                    type="text"
+                    formControlName="ingredients"
+                  ></textarea>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <label class="form-label mt-4" for="readOnlyInput"
+                    >Preparation</label
+                  >
+                  <textarea
+                    class="form-control"
+                    id="readOnlyInput"
+                    type="text"
+                    formControlName="preparation"
+                  ></textarea>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <label class="form-label mt-4" for="readOnlyInput"
+                    >Garnish</label
+                  >
+                  <input
+                    class="form-control"
+                    id="readOnlyInput"
+                    type="text"
+                    formControlName="garnish"
+                  />
+                </div>
+                <div class="col-6">
+                  <label class="form-label mt-4" for="readOnlyInput"
+                    >Glassware</label
+                  >
+                  <input
+                    class="form-control"
+                    id="readOnlyInput"
+                    type="text"
+                    formControlName="glassware"
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <label class="form-label mt-4" for="readOnlyInput"
+                    >Origin</label
+                  >
+                  <input
+                    class="form-control"
+                    id="readOnlyInput"
+                    type="text"
+                    formControlName="origin"
+                  />
+                </div>
+                <div class="col-6">
+                  <label class="form-label mt-4" for="readOnlyInput"
+                    >Bartender</label
+                  >
+                  <input
+                    class="form-control"
+                    id="readOnlyInput"
+                    type="text"
+                    formControlName="bartender"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+            >
+              Save changes
+            </button>
+          </div>
+        </form>
       </div>
+    </div>
+  </div>
 </div>
